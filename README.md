@@ -1,6 +1,6 @@
-#Twitter-Clone
+# Twitter-Clone
 
-##Installation
+## Installation
 goto client run 
 ```bash
 npm install
@@ -16,7 +16,7 @@ open mysql in xampp and create database name
 twitter
 ```
 
-##Run
+## Run
 To Start server run 
 ```bash
 npm run dev
