@@ -9,6 +9,7 @@ import { SET_UPDATE } from "../../redux/actions";
 const URL = process.env.REACT_APP_SERVER_URL;
 
 const TweetModal = (props) => {
+  const [tweetLength,setTweetLength]=useState(0)
   const [text, setText] = useState("");
   const [isTweetDisabled, setIsTweetDisabled] = useState(true);
   const [preview, setPreview] = useState({ image: "", video: "", media: null });
@@ -66,12 +67,17 @@ const TweetModal = (props) => {
             placeholder="What's happening?"
             value={text}
             onChange={(e) => {
+              if(e.target.value.length<=500)
+              {
               setText(e.target.value);
+              setTweetLength(e.target.value.length)
               e.target.value
                 ? setIsTweetDisabled(false)
                 : setIsTweetDisabled(true);
+              }
             }}
           ></textarea>
+          
           <div style={{ marginBottom: "10px" }}>
             {preview.image && (
               <img src={preview.image} style={{ width: "100%" }} />
@@ -85,6 +91,7 @@ const TweetModal = (props) => {
             )}
           </div>
           <Flex style={{ alignItems: "center", justifyContent: "flex-end" }}>
+          <div style={{color:'rgb(29, 161, 242)'}} >{tweetLength}/500</div>
             <div>
               <label htmlFor="photo">
                 <UploadButton />

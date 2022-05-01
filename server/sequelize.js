@@ -14,13 +14,10 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   port: DB_PORT,
   dialect: "mysql",
 });
-(async () => {
-  try {
-    const res = await sequelize.sync();
-  } catch (err) {
-    console.log(err);
-  }
-})();
+
+sequelize.authenticate()
+  .then(()=>{console.log("Database Connected..")})
+  .catch((err)=>{console.log("Error:",err)})
 
 const User = UserModel(sequelize);
 const Follower = FollowerModel(sequelize);
