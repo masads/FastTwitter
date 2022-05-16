@@ -7,6 +7,7 @@ import { Flex, Button } from "../styles/modal";
 import { SET_UPDATE } from "../../redux/actions";
 
 const URL = process.env.REACT_APP_SERVER_URL;
+const PURL= process.env.PYTHON_SERVER
 
 const TweetModal = (props) => {
   const [tweetLength,setTweetLength]=useState(0)
@@ -23,8 +24,14 @@ const TweetModal = (props) => {
   const addTweet = async () => {
     setIsTweetDisabled(true);
     const data = new FormData();
+    const dataText=new FormData()
     data.append("userId", user.id);
     data.append("text", text);
+    dataText.append("text",text)
+    // const type = await axios.post(`${PURL}/gettag`, dataText);
+    const type="food"
+    data.append("type",type)
+
     if (preview.media) data.append("media", preview.media);
     if (preview.image || preview.video)
       data.append("resource_type", preview.image ? "image" : "video");

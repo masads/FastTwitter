@@ -4,6 +4,7 @@ const upload = multer();
 const {
   addTweet,
   getTweet,
+  getAdData,
   removeTweet,
 } = require("../controllers/tweet/tweet");
 const {
@@ -25,6 +26,7 @@ const { verifyJwt } = require("../authorization");
 
 router.post("/add-tweet", upload.single("media"), addTweet);
 router.get("/get-tweet", getTweet);
+router.get("/get-adsdata",getAdData);
 router.delete("/remove", verifyJwt, removeTweet);
 router.post("/like/add", verifyJwt, likeTweet);
 router.delete("/like/remove", verifyJwt, unlikeTweet);

@@ -4,6 +4,7 @@ const upload = require("../upload");
 
 module.exports = {
   addTweet: async (req, res) => {
+    console.log(req.body)
     // Joi validation checks
     const validation = addTweetValidation(req.body);
     if (validation.error)
@@ -13,21 +14,55 @@ module.exports = {
       console.log(media)
       
       try {
-        const getuser =await User.findOne({
-          attributes: [
-            "foodtweetcount",
-            "clothestweetcount",
-            "gamestweetcount",
-            "laptoptweetcount",
-            "watchtweetcount",
-            "totaltweets",
-          ],
-          where: {
-            id:req.body.userId
-          }
-        })
-        let {foodtweetcount,clothestweetcount,gamestweetcount,laptoptweetcount,watchtweetcount,totaltweets} = getuser.dataValues
-
+        // const getuser =await User.findOne({
+        //   attributes: [
+        //     "foodtweetcount",
+        //     "clothestweetcount",
+        //     "gamestweetcount",
+        //     "laptoptweetcount",
+        //     "watchtweetcount",
+        //     "totaltweets",
+        //   ],
+        //   where: {
+        //     id:req.body.userId
+        //   }
+        // })
+        // let {foodtweetcount,clothestweetcount,gamestweetcount,laptoptweetcount,watchtweetcount,totaltweets} = getuser.dataValues
+        if(req.body.type=='food')
+        {
+          await User.increment("foodtweetcount", {
+            by: 1,
+            where: { id: req.body.userId },
+          });
+        }else if(req.body.type=='clothes')
+        {
+          await User.increment("clothestweetcount", {
+            by: 1,
+            where: { id: req.body.userId },
+          });
+        }else if(req.body.type=='games')
+        {
+          await User.increment("gamestweetcount", {
+            by: 1,
+            where: { id: req.body.userId },
+          });
+        }else if(req.body.type=='laptop')
+        {
+          await User.increment("laptoptweetcount", {
+            by: 1,
+            where: { id: req.body.userId },
+          });
+        }else if(req.body.type=='watch')
+        {
+          await User.increment("watchtweetcount", {
+            by: 1,
+            where: { id: req.body.userId },
+          });
+        }
+        await User.increment("totaltweets", {
+          by: 1,
+          where: { id: req.body.userId },
+        });
         const tweet = await Tweet.create({
           userId: req.body.userId,
           text: req.body.text,
@@ -71,6 +106,23 @@ module.exports = {
       raw: true,
     });
     return tweet;
+  },
+  getAdData: async (req,res) => {
+    const adsData = await User.findOne({
+      attributes: [
+            "foodtweetcount",
+            "clothestweetcount",
+            "gamestweetcount",
+            "laptoptweetcount",
+            "watchtweetcount",
+            "totaltweets",
+      ],
+      where: {
+        id: req.query.userId,
+      },
+    });
+    // console.log("----->",req.query.userId)
+    res.status(200).json({ adsData });
   },
   removeTweet: async (req, res) => {
     console.log("removing", req.body);

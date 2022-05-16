@@ -5,11 +5,15 @@ import axios from "axios";
 import { SideBarBox, Header, Users, UserFlex, Button } from "../styles/sidebar";
 import Loading from "../loading";
 import { SET_UPDATE } from "../../redux/actions";
-
+import laptop from '../../../public/laptop.png'
+import food from '../../../public/food.png'
+import games from '../../../public/games.png'
+import watch from '../../../public/watch.png'
+import clothes from '../../../public/clothes.png'
 const URL = process.env.REACT_APP_SERVER_URL;
-
+import { Image } from 'antd';
 const SideBar = () => {
-  const [adName,setAdName]=useState("No Ad")
+  const [ad,setAd]=useState(laptop)
   const [whoFollow, setWhoFollow] = useState(null);
   const [isFollowDisabled, setFollowDisabled] = useState(false);
 
@@ -32,6 +36,33 @@ const SideBar = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        const adsData = await axios.get(`${URL}/tweet/get-adsdata?userId=${userId}`);
+        console.log(adsData.data.adsData)
+        let adsCount = [{"type":"clothes","count":adsData.data.adsData.clothestweetcount},{"type":"food","count":adsData.data.adsData.foodtweetcount},{"type":"games","count":adsData.data.adsData.gamestweetcount},{"type":"laptop","count":adsData.data.adsData.laptoptweetcount},{"type":"watch","count":adsData.data.adsData.watchtweetcount}]
+        let max=0
+        for(let i of adsCount)
+        {
+          if(max<i.count)
+          { 
+            if(i.type=="watch")
+            {
+              setAd(watch)
+            }else if(i.type=="food")
+            {
+              setAd(food)
+            }else if(i.type=="clothes")
+            {
+              setAd(clothes)
+            }else if(i.type=="games")
+            {
+              setAd(games)
+            }else if(i.type=="laptop")
+            {
+              setAd(laptop)
+            }
+            max=parseInt(i.count)
+          }
+        }
         setWhoFollow(res.data.whoFollow);
       } catch (err) {
         console.log(err);
@@ -106,11 +137,15 @@ const SideBar = () => {
     </SideBarBox>
     <SideBarBox tweetHov={theme.tweetHov}>
       <Header color={theme.color} border={theme.border}>
-        <h2>Ads</h2>
+        <h2>AD</h2>
       </Header>
       <div>
-          {adName}
+          <Image
+          src={ad}
+        />
       </div>
+      <p style={{ textAlign: "center", color: theme.color ,height:30}}>
+      </p>
     </SideBarBox>
     </>
   );
