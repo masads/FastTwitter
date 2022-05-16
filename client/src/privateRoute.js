@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = (props) => {
   const { homeAuthenticated } = props;
+  console.log(homeAuthenticated)
   const token = useSelector((state) => state.profile.user.token);
   let isAuthenticated = false;
   try {
@@ -13,7 +14,7 @@ const PrivateRoute = (props) => {
   } catch (err) {
     isAuthenticated = false;
   }
-
+  console.log(props)
   if (homeAuthenticated)
     return isAuthenticated ? (
       <Redirect to={{ pathname: "/home" }} />

@@ -9,6 +9,7 @@ import { SET_UPDATE } from "../../redux/actions";
 const URL = process.env.REACT_APP_SERVER_URL;
 
 const SideBar = () => {
+  const [adName,setAdName]=useState("No Ad")
   const [whoFollow, setWhoFollow] = useState(null);
   const [isFollowDisabled, setFollowDisabled] = useState(false);
 
@@ -20,6 +21,7 @@ const SideBar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     const cancelToken = axios.CancelToken;
     const source = cancelToken.source();
     (async () => {
@@ -68,6 +70,7 @@ const SideBar = () => {
   if (!whoFollow) return <Loading />;
 
   return (
+    <>
     <SideBarBox tweetHov={theme.tweetHov}>
       <Header color={theme.color} border={theme.border}>
         <h2>Who to follow</h2>
@@ -101,6 +104,15 @@ const SideBar = () => {
         ))}
       </Users>
     </SideBarBox>
+    <SideBarBox tweetHov={theme.tweetHov}>
+      <Header color={theme.color} border={theme.border}>
+        <h2>Ads</h2>
+      </Header>
+      <div>
+          {adName}
+      </div>
+    </SideBarBox>
+    </>
   );
 };
 

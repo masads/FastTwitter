@@ -8,12 +8,7 @@ const MenuBar = React.lazy(() => import("./components/menubar/index"));
 const SignIn = React.lazy(() => import("./components/signin/index"));
 const Home = React.lazy(() => import("./components/home/index"));
 const Explore = React.lazy(() => import("./components/explore/index"));
-const Notifications = React.lazy(() =>
-  import("./components/notifications/index")
-);
-const Messages = React.lazy(() => import("./components/messages/index"));
 const BookMarks = React.lazy(() => import("./components/bookmarks/index"));
-const Lists = React.lazy(() => import("./components/lists/index"));
 const Profile = React.lazy(() => import("./components/profile/index"));
 const Tweet = React.lazy(() => import("./components/tweet/index"));
 const Likes = React.lazy(() => import("./components/tweet/likes"));
@@ -75,13 +70,7 @@ const Routes = () => {
         <PrivateRoute exact path="/" component={SignIn} homeAuthenticated />
         <PrivateRoute exact path="/home" component={withMenuBar(Home)} />
         <Route path="/explore" component={withMenuBar(Explore)} />
-        <PrivateRoute
-          path="/notifications"
-          component={withMenuBar(Notifications)}
-        />
-        <PrivateRoute path="/messages" component={withMenuBar(Messages)} />
         <PrivateRoute path="/bookmarks" component={withMenuBar(BookMarks)} />
-        <PrivateRoute path="/lists" component={withMenuBar(Lists)} />
         <Route
           exact
           path="/profile/:username"
@@ -104,7 +93,7 @@ const Routes = () => {
           path="/:username/status/:tweetId/retweets"
           component={withMenuBar(withRetweetModal(Tweet))}
         />
-        <Route component={withOnlyMenuBar(PageNotFound)} />
+        <Route component={withMenuBar(PageNotFound)} />
       </Switch>
     </HashRouter>
   );

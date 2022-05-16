@@ -7,11 +7,11 @@ import { ProfileCorner, Header } from "../styles/common";
 
 const URL = process.env.REACT_APP_SERVER_URL;
 const Home = () => {
+
   const userId = useSelector((state) => state.profile.user.id);
   const theme = useSelector((state) => state.theme);
-
   return (
-    <ProfileCorner border={theme.border}>
+     <ProfileCorner border={theme.border}>
       <Header border={theme.border} bg={theme.bg} color={theme.color}>
         <h2>Home</h2>
       </Header>

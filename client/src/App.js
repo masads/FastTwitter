@@ -21,6 +21,7 @@ function App() {
       <Routes />
     </React.Suspense>
   );
+  
 }
 
 export default App;

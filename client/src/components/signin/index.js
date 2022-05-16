@@ -32,6 +32,7 @@ const SignIn = (props) => {
 
   const handleSubmit = async (data) => {
     try {
+      console.log(data)
       setLoginDisabled(true);
       const login = await axios.post(`${URL}/user/login-user`, data);
       setCredentialError({ user: null, password: null });
@@ -47,6 +48,7 @@ const SignIn = (props) => {
 
   const handleSignupSubmit = async (data) => {
     try {
+      console.log(data)
       setLoginDisabled(true);
       const signup = await axios.post(`${URL}/user/add-user`, {
         firstname: data.firstname,

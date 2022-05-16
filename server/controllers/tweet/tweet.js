@@ -11,7 +11,23 @@ module.exports = {
 
     upload(req.file, req.body.resource_type).then(async (media) => {
       console.log(media)
+      
       try {
+        const getuser =await User.findOne({
+          attributes: [
+            "foodtweetcount",
+            "clothestweetcount",
+            "gamestweetcount",
+            "laptoptweetcount",
+            "watchtweetcount",
+            "totaltweets",
+          ],
+          where: {
+            id:req.body.userId
+          }
+        })
+        let {foodtweetcount,clothestweetcount,gamestweetcount,laptoptweetcount,watchtweetcount,totaltweets} = getuser.dataValues
+
         const tweet = await Tweet.create({
           userId: req.body.userId,
           text: req.body.text,

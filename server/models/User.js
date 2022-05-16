@@ -49,5 +49,30 @@ module.exports = (sequelize) => {
             type: DataTypes.DATEONLY,
             allowNull: false,
         },
+        foodtweetcount:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+        clothestweetcount:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+        gamestweetcount:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+        laptoptweetcount:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+        watchtweetcount:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+        totaltweets:{
+            type: DataTypes.UUID,
+            defaultValue:0
+        },
+
     });
 };
