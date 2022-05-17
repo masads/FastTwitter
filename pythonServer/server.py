@@ -46,7 +46,7 @@ def balanced_f1_score(y_true, y_pred):
     recall = balanced_recall(y_true, y_pred)
     return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
 
-# tensorflow_graph = tf.keras.models.load_model("./my_model2",custom_objects={"balanced_recall":balanced_recall, "balanced_precision":balanced_precision, "balanced_f1_score":balanced_f1_score})
+tensorflow_graph = tf.keras.models.load_model("./my_model2",custom_objects={"balanced_recall":balanced_recall, "balanced_precision":balanced_precision, "balanced_f1_score":balanced_f1_score})
 
 
 def predict_class(reviews,tensorflow_graph):
@@ -57,7 +57,6 @@ def predict_class(reviews,tensorflow_graph):
 #
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
 CORS(app)
 
 @app.route('/', methods=['GET'])
@@ -67,7 +66,7 @@ def home():
 @app.route('/gettag', methods=['POST'])
 def getuser():
     record = json.loads(request.data)
-    tensorflow_graph = tf.keras.models.load_model("./my_model2",custom_objects={"balanced_recall":balanced_recall, "balanced_precision":balanced_precision, "balanced_f1_score":balanced_f1_score})
+    
     data=predict_class([record['text']],tensorflow_graph)
     types=["food", "clothes", "games", "laptop", "watch"]
     print(types[data[0]])
