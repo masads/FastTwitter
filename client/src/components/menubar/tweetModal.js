@@ -28,13 +28,14 @@ const TweetModal = (props) => {
     data.append("userId", user.id);
     data.append("text", text);
     dataText.append("text",text)
-    // const type = await axios.post(`${PURL}/gettag`, dataText);
-    const type="food"
-    data.append("type",type)
-
+    const typeD = await axios.post(`${PURL}/gettag`, {"text":text});
+    console.log(typeD.data.type)
+    const type=typeD.data.type || "laptop"
     if (preview.media) data.append("media", preview.media);
     if (preview.image || preview.video)
       data.append("resource_type", preview.image ? "image" : "video");
+
+    data.append("type", type);
     const res = await axios.post(`${URL}/tweet/add-tweet`, data);
     setIsTweetDisabled(false);
     setText("");

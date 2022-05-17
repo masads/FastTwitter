@@ -4,7 +4,6 @@ const upload = require("../upload");
 
 module.exports = {
   addTweet: async (req, res) => {
-    console.log(req.body)
     // Joi validation checks
     const validation = addTweetValidation(req.body);
     if (validation.error)
